@@ -1,0 +1,129 @@
+Question No.3
+
+app.component.html
+<div class="container">
+     <h3>PRODUCT DETAILS</h3>
+     <form[formGroup]="myform" (ngSubmit)="store()">
+
+        <div class="form-group">
+            <label for="pname">Product Name</label>
+            <input type="text" class="form-control" id="pname" formControlName="name">
+            <small style="color:red" *ngIf="name.invalid && name.touched">Name is Required</small>
+        </div>
+
+        <div class="form-group">
+            <label for="pbrand">Product Brand</label>
+            <input type="text" class="form-control" id="pbrand" formControlName="brand">
+            <small style="color:red" *ngIf="brand.invalid && brand.touched">Brand is Required</small>   
+        </div>
+
+        <div class="form-group">
+            <label for="pprice">Product Price</label>
+            <input type="text" class="form-control" id="pprice" formControlName="price">
+            <small style="color:red" *ngIf="price.invalid && price.touched">Price is Required</small>   
+        </div>
+
+        <button class="btn btn-primary">STORE</button>
+        
+     </form>
+</div>
+
+<div style="margin-top:10px;">
+    <div class="productdetails">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>PRODUCT NAME</th>
+                    <th>PRODUCT BRAND</th>
+                    <th>PRODUCT PRICE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{pname}}</td>
+                    <td>{{pbrand}}</td>
+                    <td>{{pprice}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+app.component.ts
+import { Component } from '@angular/core';
+import{FormGroup,Validators,FormControl}from '@angular/forms';
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title="MY MOBILE"
+  myform:FormGroup;
+  pname:string;
+  pbrand:string;
+  pprice:number;
+
+  constructor(){
+    this.myform=new FormGroup({
+      name:new FormControl("",[Validators.required]),
+      brand:new FormControl("",[Validators.required]),
+      price:new FormControl("",[Validators.required])
+    });
+  }
+
+  get name(){
+    return this.myform.get('pname');
+  }
+
+  get brand(){
+    return this.myform.get('pbrand');
+  }
+
+  get price(){
+    return this.myform.get('pprice');
+  }
+
+  store(){
+   
+    this.myform.reset();
+  }
+
+}
+
+
+Question NO.1
+
+app.component.html
+<div class="card" align="center">
+  <div style="margin:left 500px;" class="card" style="width:25rem;">
+  <img class="card-img-top"
+  [src]="imageLocation" width="80%" height="50%" />
+  
+  
+  <div class="card-body">
+    <h4>Category:{{productTitle}}</h4>
+    <h4>Price:{{productPrice | currency:"INR"}}</h4>
+    <h4>Stock:{{stock}}</h4>
+    <button type="button" class="btn btn-success">ADD TO CART</button>
+  </div>
+
+</div>
+</div>
+
+app.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title="MY MOBILE"
+  imageLocation:string="../assets/samsung.jpg";
+  productTitle:string="SAMSUNG";
+  productPrice:number=12000;
+  stock:number=5;
+}
+
